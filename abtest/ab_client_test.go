@@ -12,7 +12,7 @@ func init() {
 	log.InitDefaultLogger()
 	testClient = new(ABClient)
 	hostport := "http://phoenix-rec-recsrv.srv.test.ixiaochuan.cn"
-	//hostport := "http://phoenix-api.ixiaochuan.cn"
+	////hostport := "http://phoenix-api.ixiaochuan.cn"
 	testClient.Open(testClient, hostport, 10, 16)
 }
 
