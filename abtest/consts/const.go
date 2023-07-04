@@ -6,6 +6,6 @@ const (
 )
 
 const (
-	DefaultAbConfigHost = "http://phoenix-rec-recsrv.srv.ixiaochuan.cn"
+	DefaultAbConfigHost = "http://phoenix-api.icocofun.com"
 	DefaultAbApiPath    = "/abtest/httpapi/get_all_config_list"
 )

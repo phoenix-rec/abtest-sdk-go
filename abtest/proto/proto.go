@@ -140,6 +140,7 @@ func (i *ExperimentInfo) MarshalJSON() ([]byte, error) {
 	return json.Marshal(map[string]interface{}{
 		"exp_id":          i.ExpID,
 		"name":            i.Name,
+		"exp_type":        i.ExpType,
 		"ut":              i.Ut,
 		"partition_count": i.PartitionCount,
 		"status":          i.Status,
@@ -165,6 +166,9 @@ func (i *ExperimentInfo) UnmarshalJSON(data []byte) error {
 
 	name, _ := m["name"].(string)
 	i.Name = name
+
+	expType, _ := m["exp_type"].(json.Number).Int64()
+	i.ExpType = int(expType)
 
 	ut, _ := m["ut"].(json.Number).Int64()
 	i.Ut = ut

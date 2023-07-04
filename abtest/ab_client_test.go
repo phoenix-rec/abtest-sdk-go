@@ -12,7 +12,7 @@ func init() {
 	log.InitDefaultLogger()
 	testClient = new(ABClient)
 	hostport := "http://phoenix-rec-recsrv.srv.test.ixiaochuan.cn"
-	////hostport := "http://phoenix-api.ixiaochuan.cn"
+	//hostport := "http://phoenix-api.icocofun.com"
 	testClient.Open(testClient, hostport, 10, 16)
 }
 
@@ -22,7 +22,7 @@ func TestServerUnavailable1(t *testing.T) {
 		fmt.Printf("get strategy name error: %v\n", err)
 	}
 	fmt.Printf("strategy name : %v\n", strategyName)
-	expInfo, _ := testClient.GetStrategyName("3", "recommend_0703")
+	expInfo, _ := testClient.GetExperiments("3")
 	fmt.Printf("exp info : %v\n", expInfo)
 
 }

@@ -51,7 +51,7 @@ func (c *ABClient) Open(r ConfigReader, hostport string, interval int, projectId
 	c.hostport = hostport
 	c.interval = interval
 
-	logger.Trace("Open hostport: %v, interval: %v", c.hostport, c.interval)
+	logger.TraceF("Open hostport: %v, interval: %v", c.hostport, c.interval)
 
 	if c.ticker != nil {
 		c.ticker.Stop()
@@ -61,7 +61,7 @@ func (c *ABClient) Open(r ConfigReader, hostport string, interval int, projectId
 	c.infoMap.Store(make(map[int64]map[string]*abtest.ExperimentInfo))
 	err := r.Update()
 	if err != nil {
-		logger.Error("ABClient init err: %v", err)
+		logger.ErrorF("ABClient init err: %v", err)
 		logger.Error(ErrAllDefault)
 	}
 
@@ -82,7 +82,7 @@ func (c *ABClient) isRunning() bool {
 func (c *ABClient) work(r ConfigReader) {
 	defer func() {
 		if err := recover(); err != nil {
-			logger.Error("worker err: %v", err)
+			logger.ErrorF("worker err: %v", err)
 		}
 	}()
 
@@ -102,7 +102,7 @@ func (c *ABClient) work(r ConfigReader) {
 			c.ticksToSkip = c.serverUnavailableTicks
 
 			if c.ut == 0 {
-				logger.Error("Update err: %v", err)
+				logger.ErrorF("Update err: %v", err)
 				logger.Error(ErrAllDefault)
 			} else {
 				logger.Warn("Update err: %v", err)
@@ -128,7 +128,7 @@ func (c *ABClient) Update() (err error) {
 		return
 	}
 
-	logger.Trace("%d project experiment(s) to update", len(remoteInfoMap))
+	logger.TraceF("%d project experiment(s) to update", len(remoteInfoMap))
 
 	atomic.StoreUint64(&c.errCount, 0)
 	c.m.Lock()
@@ -501,7 +501,6 @@ func (c *ABClient) apiRequest(url string, httpBody []byte) (resp []byte, err err
 	if err != nil {
 		return
 	}
-	// 设置请求头
 
 	// 发起请求
 	httpResp, err := c.abAdapter.Do(request)
