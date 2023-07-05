@@ -4,6 +4,7 @@ import (
 	jsoniter "github.com/json-iterator/go"
 	"github.com/phoenix-rec/abtest-sdk-go/abtest/consts"
 	logger "github.com/phoenix-rec/abtest-sdk-go/abtest/log"
+	proto "github.com/phoenix-rec/abtest-sdk-go/abtest/proto"
 )
 
 var client ConfigReader
@@ -11,22 +12,23 @@ var _json = jsoniter.ConfigCompatibleWithStandardLibrary
 
 // Open the A/B client which holds all the A/B configs in memory
 // and incrementally synchronizes data from server at intervals specified in conf.
-func Open(projectId int64, hostport string, interval int) (err error) {
+func Open(projectId int64, opts ...proto.Option) (err error) {
 	if projectId == 0 {
 		err = ErrClientSettingErr
 		return
 	}
 
-	if hostport == "" {
-		hostport = consts.DefaultAbConfigHost
+	opt := proto.Options{
+		Hostport: consts.DefaultAbConfigHost,
+		Interval: consts.DefaultIntervalInSecond,
+	}
+	for _, o := range opts {
+		o(&opt)
 	}
 
-	if interval <= 0 {
-		interval = consts.DefaultIntervalInSecond
-	}
 	logger.InitDefaultLogger()
 	client = new(ABClient)
-	client.Open(client, hostport, interval, projectId)
+	client.Open(client, opt.Hostport, opt.Interval, projectId)
 	return
 }
 

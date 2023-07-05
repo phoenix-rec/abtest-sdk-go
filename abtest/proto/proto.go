@@ -23,6 +23,25 @@ const (
 	Disabled ExperimentStatus = -1
 )
 
+type Option func(*Options)
+
+type Options struct {
+	Hostport string
+	Interval int
+}
+
+func WithHostport(s string) Option {
+	return func(o *Options) {
+		o.Hostport = s
+	}
+}
+
+func WithInterval(i int) Option {
+	return func(o *Options) {
+		o.Interval = i
+	}
+}
+
 type ExperimentInfo struct {
 	ExpID          string           `json:"exp_id"`
 	Name           string           `json:"name"`
