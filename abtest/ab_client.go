@@ -477,7 +477,7 @@ func (c *ABClient) TrackError(f, id, expName, keyName string, err error) {
 
 	errCount := atomic.AddUint64(&c.errCount, 1)
 	if errCount&(errCount-1) == 0 { // is power of two
-		logger.Warn("%s err: %v, id: %s, expName: %s, keyName: %s", f, err, id, expName, keyName)
+		logger.WarnF("%s err: %v, id: %s, expName: %s, keyName: %s", f, err, id, expName, keyName)
 	}
 
 	return
@@ -490,7 +490,7 @@ func (c *ABClient) TrackErrorNew(f, id, expName, keyName string, err error) {
 
 	errCount := atomic.AddUint64(&c.errCount, 1)
 	if errCount&(errCount-1) == 0 { // is power of two
-		logger.Warn("%s err: %v, id: %s, expName: %s, keyName: %s, typ: %v", f, err, id, expName, keyName)
+		logger.WarnF("%s err: %v, id: %s, expName: %s, keyName: %s, typ: %v", f, err, id, expName, keyName)
 	}
 
 	return
